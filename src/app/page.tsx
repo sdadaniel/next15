@@ -1,30 +1,33 @@
+"use client";
+import routes from "@/data/routes";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Page() {
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const [count, setCount] = useState(0);
   return (
     <div>
-      <h1>Home1</h1>
-      <h3 style={{ color: "blue" }}>Home2</h3>
-      <Link href="/about">About</Link>
-
+      <h1>Welcome To MyHompage</h1>
+      <Link href={routes.pokemon.list}>목록</Link>
+      <h3 data-testid="countNumber">{count}</h3>
       <button
-        disabled={disabled}
         onClick={() => {
-          setDisabled((p) => !p);
+          setCount((p) => p + 1);
         }}
       >
-        Click
+        add
       </button>
-
       <button
-        disabled={disabled}
-        onClick={() => {
-          setDisabled((p) => !p);
+        onClick={async () => {
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              setCount((p) => p - 1);
+              resolve("good");
+            }, 1000);
+          });
         }}
       >
-        두번째
+        subtract
       </button>
     </div>
   );
